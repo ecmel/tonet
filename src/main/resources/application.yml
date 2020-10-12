@@ -1,0 +1,10 @@
+micronaut:
+  application:
+    name: tonet
+  executors:
+    io:
+      type: fixed
+      nThreads: 75
+openvidu:
+  hostname: http://localhost:4443
+  secret: MY_SECRET
