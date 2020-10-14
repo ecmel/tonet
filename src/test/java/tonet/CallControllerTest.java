@@ -10,8 +10,6 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.openvidu.java.client.OpenVidu;
-import io.openvidu.java.client.Session;
 
 @MicronautTest
 class CallControllerTest
@@ -21,7 +19,7 @@ class CallControllerTest
     HttpClient client;
 
     @Inject
-    OpenVidu openVidu;
+    OpenViduClient openVidu;
 
     @Test
     void shouldValidateSessionId()
@@ -85,12 +83,11 @@ class CallControllerTest
             assertEquals(HttpStatus.OK, res.getStatus());
         }
 
-        openVidu.fetch();
-
         int count = 0;
 
-        for (Session session : openVidu.getActiveSessions())
+        for (Session session : openVidu.getSessions().blockingGet().getContent())
         {
+
             if (payload.getSessionId().equals(session.getSessionId()))
             {
                 count++;
