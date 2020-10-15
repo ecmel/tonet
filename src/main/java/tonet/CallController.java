@@ -10,7 +10,9 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
+import io.micronaut.validation.Validated;
 
+@Validated
 @Controller("/call")
 public class CallController
 {
@@ -23,7 +25,7 @@ public class CallController
 
     @Post
     @ExecuteOn(TaskExecutors.IO)
-    public char[] generateToken(@NotNull @Valid @Body CallPayload payload) throws Exception
+    public char[] generateToken(@Body @NotNull @Valid CallPayload payload) throws Exception
     {
         String sessionId = Normalizer
             .normalize(payload.getSessionId(), Normalizer.Form.NFD)
