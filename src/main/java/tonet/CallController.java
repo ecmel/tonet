@@ -1,5 +1,6 @@
 package tonet;
 
+import java.text.Normalizer;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import io.micronaut.http.HttpStatus;
@@ -11,23 +12,22 @@ import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 
 @Controller("/call")
-@ExecuteOn(TaskExecutors.IO)
 public class CallController
 {
-    private final OpenViduClient client;
+    private final OpenViduClient openVidu;
 
-    public CallController(OpenViduClient client)
+    public CallController(OpenViduClient openVidu)
     {
-        this.client = client;
+        this.openVidu = openVidu;
     }
 
     @Post
+    @ExecuteOn(TaskExecutors.IO)
     public char[] generateToken(@NotNull @Valid @Body CallPayload payload) throws Exception
     {
-        String sessionId = payload.getSessionId()
-            .replace('ğ', 'g').replace('Ğ', 'G').replace('ü', 'u').replace('Ü', 'U')
-            .replace('ş', 's').replace('Ş', 'S').replace('ı', 'i').replace('İ', 'I')
-            .replace('ö', 'o').replace('Ö', 'O').replace('ç', 'c').replace('Ç', 'C')
+        String sessionId = Normalizer
+            .normalize(payload.getSessionId(), Normalizer.Form.NFD)
+            .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
             .replaceAll("[^0-9a-zA-Z-]", "_");
 
         SessionProperties properties = new SessionProperties();
@@ -37,7 +37,7 @@ public class CallController
 
         try
         {
-            session = client.createSession(properties).blockingGet();
+            session = openVidu.createSession(properties).blockingGet();
         }
         catch (HttpClientResponseException e)
         {
@@ -51,7 +51,7 @@ public class CallController
         options.setSession(session == null ? sessionId : session.getId());
         options.setRole(OpenViduRole.PUBLISHER);
 
-        Token token = client.createToken(options).blockingGet();
+        Token token = openVidu.createToken(options).blockingGet();
 
         return token.getId().toCharArray();
     }

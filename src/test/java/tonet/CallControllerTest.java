@@ -62,7 +62,7 @@ class CallControllerTest
             .toBlocking()
             .retrieve(HttpRequest.POST("/", payload));
 
-        assertNotEquals(-1, res.indexOf("AaGgSsIiOoCcGgSsIiOoCc-0123456789-__"));
+        assertNotEquals(-1, res.indexOf("AaGgSsI_OoCcGgSsI_OoCc-0123456789-__"));
     }
 
     @Test
