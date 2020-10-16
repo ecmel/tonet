@@ -9,15 +9,15 @@ import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Single;
 
 @BasicAuth
-@Client("${openvidu.hostname}")
+@Client("${openvidu.hostname}/api")
 public interface OpenViduClient
 {
-    @Post("/api/sessions")
-    public Single<Session> createSession(@NotNull @Valid @Body SessionProperties properties);
-
-    @Post("/api/tokens")
-    public Single<Token> createToken(@NotNull @Valid @Body TokenOptions options);
-
-    @Get("/api/sessions")
+    @Get("/sessions")
     public Single<OpenViduCollection<Session>> getSessions();
+
+    @Post("/sessions")
+    public Single<Session> createSession(@Body @NotNull @Valid SessionProperties properties);
+
+    @Post("/tokens")
+    public Single<Token> createToken(@Body @NotNull @Valid TokenOptions options);
 }
