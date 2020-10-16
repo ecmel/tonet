@@ -10,9 +10,7 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
-import io.micronaut.validation.Validated;
 
-@Validated
 @Controller("/call")
 public class CallController
 {
