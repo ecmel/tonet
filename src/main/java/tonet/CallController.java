@@ -3,13 +3,10 @@ package tonet;
 import java.text.Normalizer;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
-import io.micronaut.http.client.exceptions.HttpClientResponseException;
-import io.micronaut.scheduling.TaskExecutors;
-import io.micronaut.scheduling.annotation.ExecuteOn;
+import io.reactivex.Single;
 
 @Controller("/call")
 public class CallController
@@ -22,8 +19,7 @@ public class CallController
     }
 
     @Post
-    @ExecuteOn(TaskExecutors.IO)
-    public char[] generateToken(@Body @NotNull @Valid CallPayload payload) throws Exception
+    public Single<char[]> generateToken(@Body @NotNull @Valid CallPayload payload) throws Exception
     {
         String sessionId = Normalizer
             .normalize(payload.getSessionId(), Normalizer.Form.NFD)
@@ -33,26 +29,18 @@ public class CallController
         SessionProperties properties = new SessionProperties();
         properties.setCustomSessionId(sessionId);
 
-        Session session = null;
+        return openVidu
+            .createSession(properties)
+            .map(session -> createToken(session.getId()))
+            .onErrorReturn(e -> createToken(sessionId))
+            .flatMap(o -> o.map(token -> token.getId().toCharArray()));
+    }
 
-        try
-        {
-            session = openVidu.createSession(properties).blockingGet();
-        }
-        catch (HttpClientResponseException e)
-        {
-            if (!HttpStatus.CONFLICT.equals(e.getStatus()))
-            {
-                throw e;
-            }
-        }
-
+    private Single<Token> createToken(String sessionId)
+    {
         TokenOptions options = new TokenOptions();
-        options.setSession(session == null ? sessionId : session.getId());
+        options.setSession(sessionId);
         options.setRole(OpenViduRole.PUBLISHER);
-
-        Token token = openVidu.createToken(options).blockingGet();
-
-        return token.getId().toCharArray();
+        return openVidu.createToken(options);
     }
 }
