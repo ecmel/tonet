@@ -47,7 +47,7 @@ class CallControllerTest
     }
 
     @Test
-    void shouldJoinExistingSession() throws Exception
+    void shouldJoinExistingSession()
     {
         CallOptions options = new CallOptions();
         options.setSessionId("existing-session");
