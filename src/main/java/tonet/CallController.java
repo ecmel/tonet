@@ -31,9 +31,9 @@ public class CallController
 
         return openVidu
             .createSession(properties)
-            .map(session -> createToken(session.getId()))
-            .onErrorReturn(e -> createToken(sessionId))
-            .flatMap(o -> o.map(token -> token.getId().toCharArray()));
+            .flatMap(session -> createToken(session.getId()))
+            .onErrorResumeNext(e -> createToken(sessionId))
+            .map(token -> token.getId().toCharArray());
     }
 
     private Single<Token> createToken(String sessionId)
