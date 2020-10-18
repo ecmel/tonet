@@ -19,10 +19,10 @@ public class CallController
     }
 
     @Post
-    public Single<char[]> generateToken(@Body @NotNull @Valid CallPayload payload) throws Exception
+    public Single<char[]> generateToken(@Body @NotNull @Valid CallOptions options) throws Exception
     {
         String sessionId = Normalizer
-            .normalize(payload.getSessionId(), Normalizer.Form.NFD)
+            .normalize(options.getSessionId(), Normalizer.Form.NFD)
             .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
             .replaceAll("[^0-9a-zA-Z-]", "_");
 

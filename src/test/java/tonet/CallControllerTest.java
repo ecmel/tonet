@@ -19,44 +19,44 @@ class CallControllerTest
     @Test
     void shouldValidateSessionId()
     {
-        CallPayload payload = new CallPayload();
-        payload.setSessionId("123");
+        CallOptions options = new CallOptions();
+        options.setSessionId("123");
 
-        HttpResponse<String> res = client.generateToken(payload);
+        HttpResponse<String> res = client.generateToken(options);
         assertNotEquals(HttpStatus.OK, res.getStatus());
     }
 
     @Test
     void shouldReturnTokenQuoted()
     {
-        CallPayload payload = new CallPayload();
-        payload.setSessionId("quoted");
+        CallOptions options = new CallOptions();
+        options.setSessionId("quoted");
 
-        HttpResponse<String> res = client.generateToken(payload);
+        HttpResponse<String> res = client.generateToken(options);
         assertEquals('"', res.body().charAt(0));
     }
 
     @Test
     void shouldRemoveDiacriticsFromSessionId()
     {
-        CallPayload payload = new CallPayload();
-        payload.setSessionId("AaĞğŞşİıÖöÇçĞğŞşİıÖöÇç-0123456789-%%");
+        CallOptions options = new CallOptions();
+        options.setSessionId("AaĞğŞşİıÖöÇçĞğŞşİıÖöÇç-0123456789-%%");
 
-        HttpResponse<String> res = client.generateToken(payload);
+        HttpResponse<String> res = client.generateToken(options);
         assertNotEquals(-1, res.body().indexOf("AaGgSsI_OoCcGgSsI_OoCc-0123456789-__"));
     }
 
     @Test
     void shouldJoinExistingSession() throws Exception
     {
-        CallPayload payload = new CallPayload();
-        payload.setSessionId("existing-session");
+        CallOptions options = new CallOptions();
+        options.setSessionId("existing-session");
 
         HttpResponse<String> res;
 
         for (int i = 0; i < 10; i++)
         {
-            res = client.generateToken(payload);
+            res = client.generateToken(options);
             assertEquals(HttpStatus.OK, res.getStatus());
         }
 
@@ -65,7 +65,7 @@ class CallControllerTest
         for (Session session : openVidu.getSessions().blockingGet().getContent())
         {
 
-            if (payload.getSessionId().equals(session.getSessionId()))
+            if (options.getSessionId().equals(session.getSessionId()))
             {
                 count++;
             }

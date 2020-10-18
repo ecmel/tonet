@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 import io.micronaut.core.annotation.Introspected;
 
 @Introspected
-public class CallPayload
+public class CallOptions
 {
     private String sessionId;
 
