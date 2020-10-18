@@ -4,21 +4,21 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "test",
+            "label": "build",
             "type": "shell",
-            "command": "./mvnw -B test",
+            "command": "./mvnw compile",
             "group": {
-                "kind": "test",
+                "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": []
         },
         {
-            "label": "build",
+            "label": "test",
             "type": "shell",
-            "command": "./mvnw -B compile",
+            "command": "./mvnw test",
             "group": {
-                "kind": "build",
+                "kind": "test",
                 "isDefault": true
             },
             "problemMatcher": []

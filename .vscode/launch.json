@@ -6,7 +6,7 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Debug (Launch)-Application<tonet>",
+            "name": "Debug",
             "request": "launch",
             "mainClass": "tonet.Application",
             "projectName": "tonet"
