@@ -11,7 +11,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 class CallControllerTest
 {
     @Inject
-    TonetClient client;
+    ApplicationClient client;
 
     @Inject
     OpenViduClient openVidu;

@@ -6,7 +6,7 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.http.client.annotation.Client;
 
 @Client(value = "/", errorType = String.class)
-public interface TonetClient
+public interface ApplicationClient
 {
     @Post("/call")
     public HttpResponse<String> generateToken(@Body CallPayload payload);
