@@ -4,6 +4,18 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "start",
+            "type": "shell",
+            "command": "./mvnw mn:run",
+            "problemMatcher": []
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "./mvnw clean",
+            "problemMatcher": []
+        },
+        {
             "label": "build",
             "type": "shell",
             "command": "./mvnw compile",
