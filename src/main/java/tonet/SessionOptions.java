@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 import io.micronaut.core.annotation.Introspected;
 
 @Introspected
-public class SessionProperties
+public class SessionOptions
 {
     private String mediaMode;
     private String customSessionId;

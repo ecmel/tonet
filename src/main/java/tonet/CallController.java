@@ -26,21 +26,17 @@ public class CallController
             .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
             .replaceAll("[^0-9a-zA-Z-]", "_");
 
-        SessionProperties properties = new SessionProperties();
-        properties.setCustomSessionId(sessionId);
+        SessionOptions sessionOptions = new SessionOptions();
+        sessionOptions.setCustomSessionId(sessionId);
+
+        TokenOptions tokenOptions = new TokenOptions();
+        tokenOptions.setSession(sessionId);
+        tokenOptions.setRole(OpenViduRole.PUBLISHER);
 
         return openVidu
-            .createSession(properties)
-            .flatMap(session -> createToken(session.getId()))
-            .onErrorResumeNext(e -> createToken(sessionId))
+            .createSession(sessionOptions)
+            .flatMap(session -> openVidu.createToken(tokenOptions))
+            .onErrorResumeNext(e -> openVidu.createToken(tokenOptions))
             .map(token -> token.getId().toCharArray());
-    }
-
-    private Single<Token> createToken(String sessionId)
-    {
-        TokenOptions options = new TokenOptions();
-        options.setSession(sessionId);
-        options.setRole(OpenViduRole.PUBLISHER);
-        return openVidu.createToken(options);
     }
 }

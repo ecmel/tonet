@@ -16,7 +16,7 @@ public interface OpenViduClient
     public Single<OpenViduCollection<Session>> getSessions();
 
     @Post("/sessions")
-    public Single<Session> createSession(@Body @NotNull @Valid SessionProperties properties);
+    public Single<Session> createSession(@Body @NotNull @Valid SessionOptions properties);
 
     @Post("/tokens")
     public Single<Token> createToken(@Body @NotNull @Valid TokenOptions options);
