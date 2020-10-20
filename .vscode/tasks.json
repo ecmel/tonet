@@ -4,6 +4,13 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "package",
+            "type": "shell",
+            "command": "./mvnw package",
+            "dependsOn": "clean",
+            "problemMatcher": []
+        },
+        {
             "label": "start",
             "type": "shell",
             "command": "./mvnw mn:run",
