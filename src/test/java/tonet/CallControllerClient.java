@@ -9,5 +9,5 @@ import io.micronaut.http.client.annotation.Client;
 public interface CallControllerClient
 {
     @Post
-    public HttpResponse<String> generateToken(@Body CallOptions options);
+    HttpResponse<String> generateToken(@Body CallOptions options);
 }
