@@ -5,9 +5,9 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.client.annotation.Client;
 
-@Client(value = "/", errorType = String.class)
-public interface ApplicationClient
+@Client(value = "/call", errorType = String.class)
+public interface CallControllerClient
 {
-    @Post("/call")
+    @Post
     public HttpResponse<String> generateToken(@Body CallOptions options);
 }

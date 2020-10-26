@@ -8,10 +8,10 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 
 @MicronautTest
-class CallControllerTest
+public class CallControllerTest
 {
     @Inject
-    ApplicationClient client;
+    CallControllerClient client;
 
     @Inject
     OpenViduClient openVidu;
