@@ -1,5 +1,3 @@
-openvidu:
-  hostname: https://localhost:4443
 micronaut:
   http:
     client:

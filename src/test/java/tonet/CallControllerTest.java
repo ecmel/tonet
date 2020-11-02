@@ -1,14 +1,20 @@
 package tonet;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashMap;
+import java.util.Map;
 import javax.inject.Inject;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.testcontainers.containers.GenericContainer;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.micronaut.test.support.TestPropertyProvider;
 
 @MicronautTest
-public class CallControllerTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class CallControllerTest implements TestPropertyProvider
 {
     @Inject
     CallControllerClient client;
@@ -72,5 +78,21 @@ public class CallControllerTest
         }
 
         assertEquals(1, count);
+    }
+
+    static final GenericContainer<?> container;
+
+    static
+    {
+        container = new GenericContainer<>("openvidu/openvidu-server-kms:latest");
+        container.withExposedPorts(4443).start();
+    }
+
+    @Override
+    public Map<String, String> getProperties()
+    {
+        Map<String, String> map = new HashMap<>();
+        map.put("openvidu.hostname", "https://localhost:" + container.getFirstMappedPort());
+        return map;
     }
 }
