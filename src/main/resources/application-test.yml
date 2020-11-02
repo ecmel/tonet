@@ -2,3 +2,5 @@ micronaut:
   http:
     client:
       exceptionOnErrorStatus: false
+openvidu:
+  protocol: https

@@ -92,7 +92,7 @@ public class CallControllerTest implements TestPropertyProvider
     public Map<String, String> getProperties()
     {
         Map<String, String> map = new HashMap<>();
-        map.put("openvidu.hostname", "https://localhost:" + container.getFirstMappedPort());
+        map.put("openvidu.port", container.getFirstMappedPort().toString());
         return map;
     }
 }

@@ -2,6 +2,9 @@ micronaut:
   application:
     name: tonet
 openvidu:
-  hostname: http://localhost:4443
+  uri: ${openvidu.protocol}://${openvidu.hostname}:${openvidu.port}
+  port: 4443
+  protocol: http
+  hostname: localhost
   username: OPENVIDUAPP
   password: MY_SECRET

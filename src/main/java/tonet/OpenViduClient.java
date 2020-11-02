@@ -9,7 +9,7 @@ import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Single;
 
 @BasicAuth
-@Client("${openvidu.hostname}/api")
+@Client("${openvidu.uri}/api")
 public interface OpenViduClient
 {
     @Get("/sessions")
