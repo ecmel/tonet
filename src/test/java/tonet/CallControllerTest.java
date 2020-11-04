@@ -8,7 +8,7 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 
 @MicronautTest
-public class CallControllerTest extends ContainerBaseTest
+public class CallControllerTest extends AbstractContainerTest
 {
     @Inject
     CallControllerClient client;

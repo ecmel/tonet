@@ -7,14 +7,15 @@ import org.testcontainers.containers.GenericContainer;
 import io.micronaut.test.support.TestPropertyProvider;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public abstract class ContainerBaseTest implements TestPropertyProvider
+public abstract class AbstractContainerTest implements TestPropertyProvider
 {
+    static final String image = "openvidu/openvidu-server-kms:latest";
     static final int port = 4443;
     static final GenericContainer<?> container;
 
     static
     {
-        container = new GenericContainer<>("openvidu/openvidu-server-kms:latest");
+        container = new GenericContainer<>(image);
         container.withExposedPorts(port).start();
     }
 
