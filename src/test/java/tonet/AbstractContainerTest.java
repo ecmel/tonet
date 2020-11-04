@@ -14,10 +14,7 @@ public abstract class AbstractContainerTest implements TestPropertyProvider
     static
     {
         container = new GenericContainer<>("openvidu/openvidu-server-kms:latest");
-
-        container
-            .withExposedPorts(4443)
-            .start();
+        container.withExposedPorts(4443).start();
     }
 
     @Override
