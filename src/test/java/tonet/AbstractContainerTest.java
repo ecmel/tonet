@@ -13,7 +13,8 @@ public abstract class AbstractContainerTest implements TestPropertyProvider
 
     static
     {
-        container = new GenericContainer<>("openvidu/openvidu-server-kms:latest");
+        container = new GenericContainer<>();
+        container.setDockerImageName("openvidu/openvidu-server-kms:2.15.0");
         container.withExposedPorts(4443).start();
     }
 
