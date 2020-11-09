@@ -11,6 +11,6 @@ import io.micronaut.http.annotation.FilterMatcher;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.PARAMETER })
-public @interface BasicAuth
+public @interface OpenViduBasicAuth
 {
 }

@@ -8,14 +8,14 @@ import io.micronaut.http.MutableHttpRequest;
 import io.micronaut.http.filter.ClientFilterChain;
 import io.micronaut.http.filter.HttpClientFilter;
 
-@BasicAuth
 @Singleton
-public class BasicAuthClientFilter implements HttpClientFilter
+@OpenViduBasicAuth
+public class OpenViduClientFilter implements HttpClientFilter
 {
     private final String username;
     private final String password;
 
-    public BasicAuthClientFilter(
+    public OpenViduClientFilter(
         @Value("${openvidu.username}") String username,
         @Value("${openvidu.password}") String password)
     {

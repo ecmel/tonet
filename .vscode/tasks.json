@@ -1,21 +1,6 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
-        {
-            "label": "package",
-            "type": "shell",
-            "command": "./mvnw package",
-            "dependsOn": "clean",
-            "problemMatcher": []
-        },
-        {
-            "label": "start",
-            "type": "shell",
-            "command": "./mvnw mn:run",
-            "problemMatcher": []
-        },
         {
             "label": "clean",
             "type": "shell",
@@ -40,6 +25,19 @@
                 "kind": "test",
                 "isDefault": true
             },
+            "problemMatcher": []
+        },
+        {
+            "label": "start",
+            "type": "shell",
+            "command": "./mvnw mn:run",
+            "problemMatcher": []
+        },
+        {
+            "label": "package",
+            "type": "shell",
+            "command": "./mvnw package",
+            "dependsOn": "clean",
             "problemMatcher": []
         }
     ]
