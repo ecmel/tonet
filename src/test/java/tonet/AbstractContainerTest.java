@@ -1,6 +1,7 @@
 package tonet;
 
-import java.util.HashMap;
+import static java.util.Collections.*;
+import static org.testcontainers.utility.DockerImageName.*;
 import java.util.Map;
 import org.junit.jupiter.api.TestInstance;
 import org.testcontainers.containers.GenericContainer;
@@ -13,16 +14,13 @@ public abstract class AbstractContainerTest implements TestPropertyProvider
 
     static
     {
-        container = new GenericContainer<>();
-        container.setDockerImageName("openvidu/openvidu-server-kms:2.15.0");
+        container = new GenericContainer<>(parse("openvidu/openvidu-server-kms:2.15.0"));
         container.withExposedPorts(4443).start();
     }
 
     @Override
     public Map<String, String> getProperties()
     {
-        Map<String, String> map = new HashMap<>();
-        map.put("openvidu.port", container.getFirstMappedPort().toString());
-        return map;
+        return singletonMap("openvidu.port", container.getFirstMappedPort().toString());
     }
 }
